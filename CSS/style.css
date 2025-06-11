@@ -166,6 +166,7 @@ p {
   position: relative;
   width: 100%;
   height: auto;
+  overflow: hidden;
 }
 
 .carousel-track {
@@ -177,7 +178,13 @@ p {
 
 .carousel-item-custom {
   flex: 0 0 auto;
-  width: 30%; /* Por defecto muestra ~3 cartas */
+  width: 30%; 
+  opacity: 0; 
+  transition: opacity 0.5s ease-in; 
+}
+
+.carousel-item-custom.loaded {
+    opacity: 1; 
 }
 
 .carousel-item-custom img {

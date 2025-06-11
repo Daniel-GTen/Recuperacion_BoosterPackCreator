@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pokemon Booster Pack Creator</title>
@@ -67,11 +68,17 @@
   </div>
 
 <!-- CARRUSEL -->
-  <div class="container my-5">
+ <div class="container my-5">
+    <div id="loading-spinner" class="text-center my-5">
+        <div class="spinner-border text-danger" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="text-white mt-2">Cargando cartas Pokémon...</p>
+    </div>
+
     <div class="carousel-wrapper">
       <div class="carousel-track" id="carousel-track">
-        <!-- js/script.js inyectará aquí las cartas -->
-      </div>
+        </div>
     </div>
   </div>
   
