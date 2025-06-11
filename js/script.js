@@ -1,54 +1,47 @@
-//CARRUSEL sacar cartas de la API
+// CARRUSEL sacar cartas de la API
 async function cargarCartasPokemon() {
-    const track = document.getElementById('carousel-track');
-    const loadingSpinner = document.getElementById('loading-spinner');
+    const $track = $('#carousel-track');
+    const $loadingSpinner = $('#loading-spinner');
 
-    // Mostrar spinner de carga
-    loadingSpinner.style.display = 'block';
-    track.style.display = 'none'; // Ocultar el carrusel mientras se carga para evitar el desplazamiento
+    $loadingSpinner.show();
+    $track.hide();
 
     try {
         const response = await fetch('https://api.pokemontcg.io/v2/cards?pageSize=50');
         const data = await response.json();
         const cartas = data.data;
 
-        // Elegir 6 al azar
         const cartasAleatorias = cartas.sort(() => 0.5 - Math.random()).slice(0, 6);
 
-        // Duplicamos para bucle infinito
         const cartasDobles = [...cartasAleatorias, ...cartasAleatorias];
 
-        // Limpiar las cartas existentes antes de añadir las nuevas (si las hay)
-        track.innerHTML = '';
+        $track.empty();
 
-        // Inyectar en el DOM
-        cartasDobles.forEach((carta, index) => {
-            const div = document.createElement('div');
-            div.className = 'carousel-item-custom';
-            const img = document.createElement('img');
-            img.src = carta.images.large;
-            img.alt = carta.name;
+        cartasDobles.forEach((carta) => {
+            const $div = $('<div>').addClass('carousel-item-custom');
+            const $img = $('<img>').attr({
+                src: carta.images.large,
+                alt: carta.name
+            });
 
-            // Añadir un listener de evento de carga a cada imagen
-            img.onload = () => {
-                // Añadir la clase 'loaded' después de que la imagen se haya cargado completamente
-                div.classList.add('loaded');
-            };
-            div.appendChild(img);
-            track.appendChild(div);
+            $img.on('load', function() {
+                $(this).closest('.carousel-item-custom').addClass('loaded');
+            });
+
+            $div.append($img);
+            $track.append($div);
         });
 
     } catch (error) {
         console.error('Error al cargar cartas Pokémon:', error);
-        // Opcionalmente, mostrar un mensaje de error al usuario
-        loadingSpinner.querySelector('p').textContent = 'Error al cargar las cartas. Inténtalo de nuevo más tarde.';
-        loadingSpinner.querySelector('.spinner-border').style.display = 'none'; // Ocultar spinner
+        $loadingSpinner.find('p').text('Error al cargar las cartas. Inténtalo de nuevo más tarde.');
+        $loadingSpinner.find('.spinner-border').hide();
     } finally {
-        // Ocultar spinner de carga y mostrar el carrusel una vez que todo esté hecho (éxito o error)
-        loadingSpinner.style.display = 'none';
-        track.style.display = 'flex'; // Mostrar el carrusel
+        $loadingSpinner.hide();
+        $track.show();
     }
 }
 
-// Ejecutar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', cargarCartasPokemon);
+$(document).ready(function() {
+    cargarCartasPokemon();
+});

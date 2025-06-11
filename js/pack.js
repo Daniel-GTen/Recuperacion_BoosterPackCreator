@@ -11,14 +11,14 @@ function sampleArray(arr, n) {
 }
 
 async function fetchPack() {
-  const btn = document.getElementById("reload-btn");
-  const loader = document.getElementById("loader");
-  const container = document.getElementById("card-container");
+  const $btn = $("#reload-btn");
+  const $loader = $("#loader");
+  const $container = $("#card-container");
 
-  // Desactivar boton y mostrar loader
-  btn.disabled = true;
-  loader.style.display = "block";
-  container.innerHTML = "";
+  // Desactivar botón y mostrar loader
+  $btn.prop("disabled", true);
+  $loader.show();
+  $container.empty();
 
   const countsMap = {
     original: { common: 4, uncommon: 3, holo: 3 },
@@ -26,7 +26,7 @@ async function fetchPack() {
     luxory:   { common: 0, uncommon: 5, holo: 5 },
     ultra:    { common: 0, uncommon: 0, holo: 10 }
   };
-  const packType = document.querySelector('input[name="packType"]:checked').value;
+  const packType = $('input[name="packType"]:checked').val();
   const counts = countsMap[packType] || countsMap.original;
 
   try {
@@ -57,31 +57,29 @@ async function fetchPack() {
 
     pack.forEach((card, i) => {
       if (i === counts.common + counts.uncommon) {
-        const br = document.createElement("div");
-        br.className = "w-100";
-        container.appendChild(br);
+        $container.append(`<div class="w-100"></div>`);
       }
-      const col = document.createElement("div");
-      col.className = "col-6 col-md-2 text-center mb-4";
-      col.innerHTML = `
-        <div class="card shadow-sm">
-          <img src="${card.images.small}" class="card-img-top" alt="${card.name}">
-          <div class="card-body p-2">
-            <p class="mb-0">${card.name}</p>
+      const cardHTML = `
+        <div class="col-6 col-md-2 text-center mb-4">
+          <div class="card shadow-sm">
+            <img src="${card.images.small}" class="card-img-top" alt="${card.name}">
+            <div class="card-body p-2">
+              <p class="mb-0">${card.name}</p>
+            </div>
           </div>
         </div>`;
-      container.appendChild(col);
+      $container.append(cardHTML);
     });
 
   } catch (err) {
     console.error(err);
-    container.innerHTML = `<p class="text-danger text-center">Error al cargar cartas</p>`;
+    $container.html(`<p class="text-danger text-center">Error al cargar cartas</p>`);
   } finally {
-    loader.style.display = "none";
-    btn.disabled = false;
+    $loader.hide();
+    $btn.prop("disabled", false);
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("reload-btn").addEventListener("click", fetchPack);
+$(document).ready(() => {
+  $("#reload-btn").on("click", fetchPack);
 });
