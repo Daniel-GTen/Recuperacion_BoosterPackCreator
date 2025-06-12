@@ -269,3 +269,23 @@ footer {
 #packOptions .form-check-label {
   color: #000 !important;
 }
+
+.card .card-body {
+    padding: 0.5rem !important;
+}
+
+
+#all-cards-container .col-6 {
+    opacity: 0;
+    transition: opacity 0.5s ease-in; /* Transición suave para la opacidad */
+}
+
+#all-cards-container .col-6.loaded {
+    opacity: 1;
+}
+
+.card-body p {
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
