@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Álbum</title> <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script>
+    // Detecta si estamos en GitHub Pages
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    const repoName = "Recuperacion_BoosterPackCreator"; 
+    
+    const baseUrl = isGitHubPages ? `/${repoName}/` : '/';
+
+    let baseTag = document.querySelector('base');
+    if (!baseTag) {
+        baseTag = document.createElement('base');
+        document.head.appendChild(baseTag);
+    }
+    baseTag.href = baseUrl;
+</script>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

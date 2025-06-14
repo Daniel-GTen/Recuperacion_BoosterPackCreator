@@ -6,6 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Pokemon Booster Pack Creator</title>
 
+  <script>
+    // Detecta si estamos en GitHub Pages
+    const isGitHubPages = window.location.hostname.includes('github.io');
+    const repoName = "Recuperacion_BoosterPackCreator"; 
+    
+    const baseUrl = isGitHubPages ? `/${repoName}/` : '/';
+
+    let baseTag = document.querySelector('base');
+    if (!baseTag) {
+        baseTag = document.createElement('base');
+        document.head.appendChild(baseTag);
+    }
+    baseTag.href = baseUrl;
+</script>
+
   <!--<base href="/Recuperacion_BoosterPackCreator/"> --> 
 
   <!-- CSS Bootstrap -->
